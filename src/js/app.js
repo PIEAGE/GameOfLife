@@ -1,5 +1,12 @@
 var main = document.getElementById("main")
-console.log("Success");
+var game = new RenderGame(main);
+var len = 10;
+var world = new CubeCollection(len);
 
-game = new RenderGame(main);
-game.render();
+//Init world with all possible cubes
+world.forEachCube(function(cube) {
+  game.scene.add(cube.cube);
+});
+
+world.startingState();
+game.render(world);
