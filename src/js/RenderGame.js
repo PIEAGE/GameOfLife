@@ -24,9 +24,23 @@ function RenderGame (root) {
 
   //Attach to DOMElement
   root.appendChild( this.renderer.domElement );
+
+  //Record time for game tick
+  this.initialTime = Date.now();
+  this.currentTime = null;
 }
 
 //Render function prototype
 RenderGame.prototype.render = function(world) {
+
+  //Managine game tick
+  this.currentTime = Date.now();
+  var tickDuration = 500;
+  var differenceInTime = Math.round(this.currentTime - this.initialTime);
+  if (differenceInTime > tickDuration) {
+    this.initialTime = this.currentTime - differenceInTime % tickDuration;
+    world.startingState();
+  }
+  requestAnimationFrame(this.render.bind(this, world));
   this.renderer.render( this.scene, this.camera);
 }

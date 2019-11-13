@@ -30,5 +30,4 @@ CubeCollection.prototype.startingState = function() {
   this.forEachCube(function(cube) {
     cube.setAlive(Math.random() < 0.5);
   });
-
 }
