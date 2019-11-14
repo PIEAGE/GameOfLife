@@ -11,10 +11,10 @@ Cube.prototype.setAlive = function(aliveOrNot) {
   if (aliveOrNot) {
     this.material.color = new THREE.Color(0xffff00);
     this.material.opacity = 1.0;
-    this.userData.alive = -aliveOrNot;
+    this.userData.alive = aliveOrNot;
   }
   else {
     this.material.opacity = 0;
-    this.userData.alive = aliveOrNot;
+    this.userData.alive = false;
   }
 }
