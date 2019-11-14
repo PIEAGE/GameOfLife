@@ -1,10 +1,12 @@
 function Cube(x,y,z) {
-  this.geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
-  this.material = new THREE.MeshNormalMaterial( {color: 0xffff00, transparent: true, opacity: 1.0} );
-  this.cube = new THREE.Mesh( this.geometry, this.material );
-  this.cube.position.set(x, y, z);
+  var geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
+  var material = new THREE.MeshNormalMaterial( {color: 0xffff00, transparent: true, opacity: 1.0} );
+  THREE.Mesh.call(this, geometry, material);
+  this.position.set(x, y, z);
   this.userData = { alive: false };
 }
+Cube.prototype = Object.create(THREE.Mesh.prototype);
+Cube.prototype.constructor = Cube;
 
 
 Cube.prototype.setAlive = function(aliveOrNot) {

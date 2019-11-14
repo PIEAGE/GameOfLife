@@ -30,8 +30,8 @@ CubeCollection.prototype.startingState = function() {
 
 
 CubeCollection.prototype.numberOfNeighbours = function(cube) {
-    var x = cube.cube.position.x;
-    var y = cube.cube.position.y;
+    var x = cube.position.x;
+    var y = cube.position.y;
     var counter;
     if (cube.userData.alive) {
       counter = -1;
