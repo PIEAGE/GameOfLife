@@ -7,10 +7,10 @@ function RenderGame (root) {
   this.camera.position.y = 25;
   this.camera.position.z = 50;
 
-
   //Renderer
   this.renderer = new THREE.WebGLRenderer();
   this.renderer.setSize( window.innerWidth, window.innerHeight );
+
 
   //GridHelper
   this.size = 10;
@@ -28,7 +28,19 @@ function RenderGame (root) {
   //Record time for game tick
   this.initialTime = Date.now();
   this.currentTime = null;
+
+  //Init OrbitalControls for looking around scene and rotating camera
+  this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement);
 }
+
+RenderGame.prototype.setupOrbitalControls = function(x,y,z) {
+    this.controls.target = new THREE.Vector3(25, 25, 0);
+    this.controls.autoRotate = false;
+    this.controls.update();
+    return this.controls;
+}
+
+
 
 //Render function prototype
 RenderGame.prototype.render = function(world) {
@@ -39,10 +51,13 @@ RenderGame.prototype.render = function(world) {
   var differenceInTime = Math.round(this.currentTime - this.initialTime);
   if (differenceInTime > tickDuration) {
     this.initialTime = this.currentTime - differenceInTime % tickDuration;
-    //world.startingState();
-    world.progress();
+    if (game.playing) {
+        world.progress();
+    }
+
 
   }
+  this.controls.update();
   requestAnimationFrame(this.render.bind(this, world));
   this.renderer.render( this.scene, this.camera);
 }

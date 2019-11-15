@@ -5,10 +5,11 @@ function Cube(x,y,z) {
   this.position.set(x, y, z);
   this.userData = { alive: false };
 }
+//Inherit Mesh for optimisation
 Cube.prototype = Object.create(THREE.Mesh.prototype);
 Cube.prototype.constructor = Cube;
 
-
+//Display or don't display cube base on bool
 Cube.prototype.setAlive = function(aliveOrNot) {
   if (aliveOrNot) {
     this.material.color = new THREE.Color(0xffff00);

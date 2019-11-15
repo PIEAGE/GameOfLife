@@ -1,0 +1,12 @@
+body {
+  overflow: hidden;
+  margin: 0;
+}
+
+.ui {
+  position: absolute;
+}
+
+settings {
+  margin: 20px;
+}

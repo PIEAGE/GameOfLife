@@ -1,7 +1,5 @@
 function CubeCollection(len) {
   this.cubes = new Array(len);
-
-
   //Create each column, and then populate each column with rows
   for (var i = 0; i < len; i++) {
     this.cubes[i] = new Array(len);
@@ -11,8 +9,7 @@ function CubeCollection(len) {
   }
 }
 
-
-//Method to iterate through each cube
+//Helper method to iterate through each cube
 CubeCollection.prototype.forEachCube = function(callback) {
   for (var i = 0; i < len; i++) {
     for (var j = 0; j < len; j++) {
@@ -21,13 +18,11 @@ CubeCollection.prototype.forEachCube = function(callback) {
   }
 }
 
-
-CubeCollection.prototype.startingState = function() {
+CubeCollection.prototype.startingState = function(probability) {
   this.forEachCube(function(cube) {
-    cube.setAlive(Math.random() > 0.8);
+    cube.setAlive(Math.random() > probability);
   });
 }
-
 
 CubeCollection.prototype.numberOfNeighbours = function(cube) {
     var x = cube.position.x;
@@ -39,7 +34,6 @@ CubeCollection.prototype.numberOfNeighbours = function(cube) {
     else {
       counter = 0;
     }
-
     for (var i = -1; i < 2; i++) {
       for (var j = -1; j < 2; j++) {
 
@@ -59,21 +53,13 @@ CubeCollection.prototype.numberOfNeighbours = function(cube) {
 CubeCollection.prototype.progress = function() {
   this.forEachCube(function(cube) {
     var count = this.numberOfNeighbours(cube);
-    if (cube.userData.alive && count < 2) {
-      cube.userData.nextGenIsAlive = false;
-    }
-    else if (cube.userData.alive && (count == 2 || count == 3)) {
+    if (!cube.userData.alive && count == 3) {
       cube.userData.nextGenIsAlive = true;
-    }
-    else if (cube.userData.alive && count > 3) {
+    } else if (cube.userData.alive && (count < 2 || count > 3)) {
       cube.userData.nextGenIsAlive = false;
-    }
-
-    else if (!cube.userData.alive && count == 3) {
-      cube.userData.nextGenIsAlive = true;
     }
     else {
-      cube.userData.nextGenIsAlive = false;
+      cube.userData.nextGenIsAlive = cube.userData.alive;
     }
   }.bind(this));
 
